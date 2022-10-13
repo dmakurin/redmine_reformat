@@ -49,7 +49,14 @@ module RedmineReformat
         .take # rails 7 warning
 
       @progress.start(item, mymeta.count_id, total)
-      myscope = scope.where(id: mymeta.min_id..mymeta.max_id)
+      myscope =
+        if mymeta.min_id.present? && mymeta.max_id.present?
+          scope.where(id: mymeta.min_id..mymeta.max_id)
+        else
+          # nil..nil equals 1=1 which returns full table and most likely causing a deadlock
+          scope.where('1=0')
+        end
+
       myscope
     end
 
