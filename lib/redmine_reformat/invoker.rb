@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'redmine_reformat/converters'
-require 'redmine_reformat/execution'
-require 'redmine_reformat/execution/ipc'
-require 'redmine_reformat/progress'
+require_relative 'converters'
+require_relative 'execution'
+require_relative 'execution/ipc'
+require_relative 'progress'
 
 module RedmineReformat
   class Invoker

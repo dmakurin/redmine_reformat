@@ -4,8 +4,8 @@
 # Written by Martin Cizek, Orchitech Solutions
 # Contains portions of Redmine and Redcloth3 code
 
-require 'redmine_reformat/converters/placeholders'
-require 'redmine_reformat/converters/textile_to_markdown/markdown-table-formatter/table-formatter'
+require_relative '../placeholders'
+require_relative 'markdown_table_formatter/table_formatter'
 require 'htmlentities'
 
 module RedmineReformat::Converters::TextileToMarkdown

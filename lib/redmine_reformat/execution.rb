@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'redmine_reformat/converters/configured_converters'
+require_relative 'converters/configured_converters'
 
 module RedmineReformat
   class Execution
-    attr_accessor :dryrun, :converter, :to_formatting
+    attr_accessor :dryrun, :converter, :to_formatting, :index
 
     ConfiguredConverters = RedmineReformat::Converters::ConfiguredConverters
 
@@ -46,7 +46,7 @@ module RedmineReformat
       mymeta = model.select('MAX(id) max_id, MIN(id) min_id, COUNT(id) count_id')
         .from(scope.offset(offset).limit(limit).select(:id))
         .reorder(nil)
-        .first
+        .take # rails 7 warning
 
       @progress.start(item, mymeta.count_id, total)
       myscope = scope.where(id: mymeta.min_id..mymeta.max_id)

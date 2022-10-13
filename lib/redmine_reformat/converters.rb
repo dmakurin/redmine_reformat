@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'json'
-require 'redmine_reformat/converters/configured_converters'
+require_relative 'converters/configured_converters'
 
 module RedmineReformat
   module Converters

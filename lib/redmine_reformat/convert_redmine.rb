@@ -27,7 +27,7 @@ module RedmineReformat
       scope = exn.scope(@item, scope)
       tot = exn.total(@item)
       mytot = exn.mytotal(@item)
-      STDERR.puts "#{@item}: converting #{mytot}/#{tot} non-blank #{@cols} occurences of #{all} total"
+      STDERR.puts "[#{exn.index}] #{@item}: converting #{mytot}/#{tot} non-blank #{@cols} occurrences of #{all} total"
 
       scope = scope.limit(BATCHSIZE)
       pluck_cols = [:id, @project_id_col].concat(@ctxcols).concat(@cols)
@@ -172,7 +172,7 @@ module RedmineReformat
         :to_formatting => @to_formatting
       )
 
-      scope = @exn.scope(item, WikiContent::Version)
+      scope = @exn.scope(item, WikiContentVersion)
       tot = @exn.total(item)
       mytot = @exn.mytotal(item)
 
@@ -180,7 +180,7 @@ module RedmineReformat
 
       finished = 0
       scope.includes(:page => { :wiki => :project }).find_each do |version|
-        ctx.ref = "WikiContent::Version\##{version.id}: "\
+        ctx.ref = "WikiContentVersion\##{version.id}: "\
           "/projects/#{version.project.identifier}"\
           "/wiki/#{version.page.title}/#{version.version}"
         ctx.project_id = version.project.id

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'webrick'
-require 'redmine_reformat/converters'
-require 'redmine_reformat/setting_patch'
+require_relative 'converters'
+require_relative 'setting_patch'
 
 module RedmineReformat
   class Microservice
