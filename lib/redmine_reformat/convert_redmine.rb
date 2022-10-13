@@ -92,6 +92,9 @@ module RedmineReformat
         project_id: 'wikis.project_id',
         ctxcols: ['projects.identifier', 'wiki_pages.title'],
         mkurl: ->(ctx) { "/projects/#{ctx.vals['projects.identifier']}/wiki/#{ctx.vals['wiki_pages.title']}" }
+      }),
+      Spec.new(CustomValue, :value, nil, {
+        joins: "join custom_fields on custom_fields.id = custom_values.custom_field_id and custom_fields.format_store containing 'full'"
       })
     ]
 
@@ -204,10 +207,10 @@ module RedmineReformat
     # convert custom values where applicable
     def migrate_custom_values
       # formatted custom fields
-      CustomField.all.to_a.select{|cf| cf.text_formatting == 'full'}.each do |cf|
-        spec = Spec.new(CustomValue, :value, cf.name, {where: [custom_field_id: cf.id]})
-        migrate_spec spec
-      end
+      # CustomField.all.to_a.select{|cf| cf.text_formatting == 'full'}.each do |cf|
+      #   spec = Spec.new(CustomValue, :value, cf.name, {where: [custom_field_id: cf.id]})
+      #   migrate_spec spec
+      # end
 
       # journal details for formatted custom fields
       IssueCustomField.all.to_a.select{|cf| cf.text_formatting == 'full'}.each do |cf|
